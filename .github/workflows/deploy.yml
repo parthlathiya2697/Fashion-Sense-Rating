@@ -1,3 +1,4 @@
+.github/workflows/deploy.yml
 name: Deploy to EC2
 
 on:
@@ -20,9 +21,13 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@${{secrets.EC2_PUBLIC_IP}} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
           cd Fashion-Sense-Rating
           git pull origin production
           npm install
-          nohup npm run dev --loglevel=info > frontend.log 2>&1 &
+          npm run build
+          # Use pm2 to manage the application
+          pm2 stop frontend || true  # Stop the existing process if it exists
+          pm2 start npm --name "frontend" -- run start  # Start the application in production mode
+          pm2 save  # Save the process list
           EOF
