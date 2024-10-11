@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import StyleUploader from './components/StyleUploader'
 
 export default function Home() {

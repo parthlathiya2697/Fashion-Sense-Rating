@@ -25,8 +25,12 @@ export async function POST(request: Request) {
     // Log the raw response for debugging
     console.log("Raw response:", response.choices[0]);
 
-    const result = JSON.parse(response.choices[0].message.content.replace(/```json\n/, '').replace(/\n```/, '') || '{}')
-    
+    const firstChoice = response.choices[0];
+    if (!firstChoice || !firstChoice.message || !firstChoice.message.content) {
+      throw new Error('Invalid response structure');
+    }
+
+    const result = JSON.parse(firstChoice.message.content.replace(/```json\n/, '').replace(/\n```/, '') || '{}')
     
     return NextResponse.json(result)
   } catch (error) {
