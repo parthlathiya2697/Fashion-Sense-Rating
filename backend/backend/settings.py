@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -126,7 +127,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://0.0.0.0:3000",
+    f"http://0.0.0.0:{os.environ['FRONTEND_PORT']}",
+    f"http://{os.environ['SERVER_BASE_URL']}:{os.environ['FRONTEND_PORT']}",
 ]
 
 # Alternatively, to allow all origins (not recommended for production):
