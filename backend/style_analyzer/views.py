@@ -1,16 +1,13 @@
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from openai import OpenAI
+import json
 
-from dotenv import load_dotenv
-load_dotenv()
-
-@csrf_exempt
-def analyze_style(request):
-    if request.method == 'POST':
+class AnalyzeStyleView(APIView):
+    def post(self, request, *args, **kwargs):
         try:
-            data = json.loads(request.body)
+            data = request.data
             image = data.get('image')
 
             # Initialize the OpenAI client
@@ -35,8 +32,7 @@ def analyze_style(request):
                 raise ValueError('Invalid response structure')
 
             result = json.loads(first_choice.message.content.replace('```json\n', '').replace('\n```', '') or '{}')
-            return JsonResponse(result)
+            return Response(result, status=status.HTTP_200_OK)
 
         except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
-    return JsonResponse({'error': 'Invalid request method'}, status=400)
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

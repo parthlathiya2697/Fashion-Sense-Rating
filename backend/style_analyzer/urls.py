@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import analyze_style
+from .views import AnalyzeStyleView
 
 urlpatterns = [
-    path('api/analyzeStyle/', analyze_style, name='analyze_style'),
+    path('api/analyzeStyle/', AnalyzeStyleView.as_view(), name='analyze-style'),
 ]
