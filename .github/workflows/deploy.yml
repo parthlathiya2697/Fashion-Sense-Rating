@@ -27,8 +27,8 @@ jobs:
           npm install
           npm run build
           # Use pm2 to manage the application
-          pm2 stop frontend || true  # Stop the existing process if it exists
-          pm2 start npm --name "frontend" -- run start  # Start the application in production mode
+          pm2 stop frontend || true
+          pm2 start npm --name "frontend" -- start
           pm2 save  # Save the process list
           EOF
 
