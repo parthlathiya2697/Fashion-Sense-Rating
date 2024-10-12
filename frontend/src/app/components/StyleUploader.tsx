@@ -18,7 +18,7 @@ export default function StyleUploader() {
         setImage(base64Image)
         setLoading(true)
         try {
-          const response = await fetch('/api/analyzeStyle', {
+          const response = await fetch('http://localhost:8000/api/analyzeStyle/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ image: base64Image }),
