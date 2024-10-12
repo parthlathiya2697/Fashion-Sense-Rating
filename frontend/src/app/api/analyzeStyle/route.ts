@@ -5,7 +5,7 @@ export async function POST(request: Request) {
   console.info('Analyzing style...')
   try {
     // Make a request to the Django backend API
-    const response = await fetch('http://localhost:8000/api/analyzeStyle/', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/analyzeStyle/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ image }),

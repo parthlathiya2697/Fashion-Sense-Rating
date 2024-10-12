@@ -25,12 +25,12 @@ jobs:
           git pull origin production
           cd frontend
           npm install
-          npm run build
-          # Use pm2 to manage the application
-          pm2 stop frontend || true
-          pm2 start npm --name "frontend" -- start
-          pm2 save  # Save the process list
+          npx next build --debug
+          pm2 stop fashion-sense-rating-app || true
+          pm2 start npm --name "fashion-sense-rating-app" -- run start
+          pm2 save
           EOF
+
 
   deploy_backend:
     runs-on: ubuntu-latest
