@@ -1,3 +1,5 @@
+// frontend/src/app/components/RequestCountDisplay.tsx
+
 "use client"
 import { useEffect, useState } from 'react';
 
@@ -25,12 +27,16 @@ export default function RequestCountDisplay({ requestCount, setRequestCount }: R
   }, [setRequestCount]);
 
   return (
-    <div className="request-count">
-      {requestCount !== null && maxRequestCount !== null ? (
-        <p>Requests used: {requestCount}/{maxRequestCount}</p>
-      ) : (
-        <p>Loading request count...</p>
-      )}
+    <div className="flex items-center justify-center">
+      <div className="p-3 rounded-lg shadow-lg max-w-xl mx-auto">
+        <div className="request-count">
+          {requestCount !== null && maxRequestCount !== null ? (
+            <p className="text-gray-800">Requests used: {requestCount}/{maxRequestCount}</p>
+          ) : (
+            <p className="text-gray-600 text-lg">Loading request count...</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

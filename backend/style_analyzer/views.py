@@ -34,7 +34,7 @@ class AnalyzeStyleView(APIView):
                     {
                         "role": "user",
                         "content": [
-                            {"type": "text", "text": "Analyze this image and provide a rating from 1-5 for the person's clothing style, along with a brief description of the style. Additionally, suggest potential improvements to the current clothing style, including color adjustments and minor manipulations. Format the response as JSON with 'rating', 'description', and 'improvements' fields."},
+                            {"type": "text", "text": "Analyze this image and provide a rating from 1-5 for the person's clothing style, along with a brief description of the style. Additionally, suggest potential improvements to the current clothing style, including color adjustments and minor manipulations. Format the response as JSON with 'rating', 'description', and 'improvements' fields with a list of points to reach the styling level of 5/5."},
                             {"type": "image_url", "image_url": {"url": image}},
                         ],
                     },
