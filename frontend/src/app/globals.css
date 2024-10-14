@@ -30,3 +30,43 @@ body {
 .vignette-effect {
   box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.3);
 }
+
+/* Assuming you have a separate CSS file for styles */
+.main-container {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(270deg, #ff7676, #f54ea2, #a94cf2, #4a91ff, #3cf0e3);
+  background-size: 800% 800%;
+  animation: gradientShift 35s ease infinite;
+}
+
+.content-container {
+  max-width: 600px;
+  width: 100%;
+  padding: 2rem;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  border-radius: 8px;
+}
+
+.title {
+  font-family: 'Helvetica Neue', sans-serif;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+/* Add more styles as needed */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

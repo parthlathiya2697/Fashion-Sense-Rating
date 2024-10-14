@@ -73,8 +73,8 @@ export default function StyleUploader({ maxRequestCount, requestCount, setReques
     <div className="flex items-center justify-center">
       <div className={`bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto ${showPopup ? 'blur-sm' : ''}`}>
       {!image ? ( // conditionally render based on whether image is uploaded or not
-        <div className="mb-6">
-          <label htmlFor="imageUpload" className="block text-lg font-medium text-gray-700 mb-3">
+        <div className="mb-3">
+          <label htmlFor="imageUpload" className="block text-md font-medium text-gray-700 mb-3">
             Show me how you look today!
           </label>
           <input
