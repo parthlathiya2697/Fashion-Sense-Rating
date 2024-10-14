@@ -3,9 +3,27 @@ from rest_framework.response import Response
 from rest_framework import status
 from openai import OpenAI
 import json
+import os
+
+request_count = int(os.environ['DEMO_REQUEST_COUNT'])
+request_count_max = int(os.environ['DEMO_MAX_REQUEST_COUNT'])
+
+
+class RequestCountView(APIView):
+    def get(self, request, *args, **kwargs):
+        try:
+            return Response({'request_count': request_count, 'max_request_count': request_count_max}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+
 
 class AnalyzeStyleView(APIView):
     def post(self, request, *args, **kwargs):
+        global request_count
+        if request_count >= request_count_max:
+            return Response({'error': 'Request limit exceeded'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+
         try:
             data = request.data
             image = data.get('image')
@@ -32,6 +50,7 @@ class AnalyzeStyleView(APIView):
                 raise ValueError('Invalid response structure')
 
             result = json.loads(first_choice.message.content.replace('```json\n', '').replace('\n```', '') or '{}')
+            request_count += 1  # Increment the request count
             return Response(result, status=status.HTTP_200_OK)
 
         except Exception as e:

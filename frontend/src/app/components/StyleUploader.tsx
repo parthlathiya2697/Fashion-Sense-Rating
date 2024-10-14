@@ -2,15 +2,31 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import RequestCountDisplay from './RequestCountDisplay'
 
-export default function StyleUploader() {
+interface RequestCountDisplayProps {
+  maxRequestCount: number | null;
+  requestCount: number | null;
+  setRequestCount: React.Dispatch<React.SetStateAction<number | null>>;
+}
+
+
+export default function StyleUploader({ maxRequestCount, requestCount, setRequestCount }: RequestCountDisplayProps) {
   const [image, setImage] = useState<string | null>(null)
   const [rating, setRating] = useState<number | null>(null)
   const [description, setDescription] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [showPopup, setShowPopup] = useState(false)
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
+
+    // return if request count exceeds the limit
+    if (requestCount !== null && maxRequestCount !== null && requestCount >= maxRequestCount) {
+      setShowPopup(true)
+      return
+    }
+
     if (file) {
       const reader = new FileReader()
       reader.onload = async (e) => {
@@ -23,12 +39,18 @@ export default function StyleUploader() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ image: base64Image }),
           })
+          if (response.status === 429) {
+            setShowPopup(true)
+            return
+          }
           const data = await response.json()
           setRating(data.rating)
           setDescription(data.description)
         } catch (error) {
           console.error('Error analyzing style:', error)
         }
+
+        setRequestCount((requestCount ?? 0) + 1)
         setLoading(false)
       }
       reader.readAsDataURL(file)
@@ -37,7 +59,15 @@ export default function StyleUploader() {
 
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg">
-      <div className="mb-4">
+        {showPopup && (
+        <div className="fixed top-0 left-0 right-0 bg-red-500 text-white p-4">
+          <span>Number of Demo Trials Expired.</span> [{requestCount}/{maxRequestCount}] <p>Please try again tomorrow or request the Admin at plathiya2611@gmail.com</p>
+          <button onClick={() => setShowPopup(false)} className="ml-4 underline">
+            Dismiss
+          </button>
+        </div>
+      )}
+        <div className="mb-4">
         <label htmlFor="imageUpload" className="block text-sm font-medium text-gray-700 mb-2">
           Upload your selfie
         </label>

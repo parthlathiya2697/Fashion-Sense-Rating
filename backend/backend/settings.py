@@ -140,3 +140,4 @@ CORS_ALLOWED_ORIGINS = [
 
 # Alternatively, to allow all origins (not recommended for production):
 CORS_ALLOW_ALL_ORIGINS = True
+
