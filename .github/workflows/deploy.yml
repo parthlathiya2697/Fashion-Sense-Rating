@@ -25,7 +25,6 @@ jobs:
           git pull origin production
           cd frontend
           npm install
-          npx next build --debug
           pm2 stop fashion-sense-rating-app || true
           pm2 start npm --name "fashion-sense-rating-app" -- run start
           pm2 save
