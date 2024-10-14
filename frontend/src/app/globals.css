@@ -25,3 +25,8 @@ body {
     text-wrap: balance;
   }
 }
+
+
+.vignette-effect {
+  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.3);
+}

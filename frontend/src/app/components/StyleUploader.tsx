@@ -58,15 +58,9 @@ export default function StyleUploader({ maxRequestCount, requestCount, setReques
   }
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg">
-        {showPopup && (
-        <div className="fixed top-0 left-0 right-0 bg-red-500 text-white p-4">
-          <span>Number of Demo Trials Expired.</span> [{requestCount}/{maxRequestCount}] <p>Please try again tomorrow or request the Admin at plathiya2611@gmail.com</p>
-          <button onClick={() => setShowPopup(false)} className="ml-4 underline">
-            Dismiss
-          </button>
-        </div>
-      )}
+    <div>
+    <div className={`bg-white p-8 rounded-lg shadow-lg ${showPopup ? 'blur-sm' : ''}`}>
+    
         <div className="mb-4">
         <label htmlFor="imageUpload" className="block text-sm font-medium text-gray-700 mb-2">
           Upload your selfie
@@ -96,7 +90,19 @@ export default function StyleUploader({ maxRequestCount, requestCount, setReques
           <h2 className="text-xl font-semibold mb-2">Style Rating: {rating}/5</h2>
           <p className="text-gray-700">{description}</p>
         </div>
+      )}    
+
+    </div>
+    {showPopup && (
+        <div className="fixed bottom-0 left-0 right-0 bg-red-500 text-white p-4 z-50 flex flex-col items-center justify-center vignette-effect">
+          <span>Number of Demo Trials Expired</span> [{requestCount}/{maxRequestCount}]
+          <p>Please try again tomorrow or request the Admin at plathiya2611@gmail.com</p>
+          <button onClick={() => setShowPopup(false)} className="mt-2 underline">
+            Dismiss
+          </button>
+        </div>
       )}
     </div>
+    
   )
 }
