@@ -141,3 +141,6 @@ CORS_ALLOWED_ORIGINS = [
 # Alternatively, to allow all origins (not recommended for production):
 CORS_ALLOW_ALL_ORIGINS = True
 
+
+request_count = int(os.environ['DEMO_REQUEST_COUNT'])
+request_count_max = int(os.environ['DEMO_MAX_REQUEST_COUNT'])
