@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import StyleUploader from './components/StyleUploader';
 import RequestCountDisplay from './components/RequestCountDisplay';
+import Link from 'next/link';
 
 export default function Home() {
   const [requestCount, setRequestCount] = useState<number | null>(null);
@@ -30,6 +31,9 @@ export default function Home() {
       <div className="z-10 max-w-5xl w-full items-center justify-center font-mono text-sm">
         <StyleUploader maxRequestCount={maxRequestCount} requestCount={requestCount} setRequestCount={setRequestCount}/>
       </div>
+      <Link href="/about" className="text-white mt-8">
+        Learn more about this project
+      </Link>
     </main>
   );
 }
