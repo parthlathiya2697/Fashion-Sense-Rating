@@ -25,7 +25,10 @@ jobs:
           git pull origin production
           cd frontend
           npm install
-          pm2 stop fashion-sense-rating-app || true
+          # Check if the app is running and stop it if it is
+          if pm2 list | grep -q "fashion-sense-rating-app"; then
+            pm2 stop fashion-sense-rating-app
+          fi
           pm2 start npm --name "fashion-sense-rating-app" -- run start
           pm2 save
           EOF

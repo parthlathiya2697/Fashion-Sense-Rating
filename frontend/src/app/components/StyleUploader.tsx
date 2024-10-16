@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import RequestCountDisplay from './RequestCountDisplay'
 
 interface RequestCountDisplayProps {
   maxRequestCount: number | null;
