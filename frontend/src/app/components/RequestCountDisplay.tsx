@@ -27,8 +27,8 @@ export default function RequestCountDisplay({ requestCount, setRequestCount }: R
   }, [setRequestCount]);
 
   return (
-    <div className="flex items-center justify-center fixed bottom-3">
-      <div className="p-2 rounded-lg shadow-lg max-w-xl mx-auto">
+    <div className="flex">
+      <div className="p-1 rounded-lg shadow-lg max-w-xl mx-auto">
         <div className="request-count">
           {requestCount !== null && maxRequestCount !== null ? (
             <p className="text-gray-700 si text-sm">Demo Requests used: {requestCount}/{maxRequestCount}</p>

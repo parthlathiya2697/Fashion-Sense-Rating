@@ -145,3 +145,19 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 request_count = int(os.environ['DEMO_REQUEST_COUNT'])
 request_count_max = int(os.environ['DEMO_MAX_REQUEST_COUNT'])
+
+LOGGING = {
+       'version': 1,
+       'disable_existing_loggers': False,
+       'handlers': {
+           'console': {
+               'class': 'logging.StreamHandler',
+           },
+       },
+       'loggers': {
+           'django': {
+               'handlers': ['console'],
+               'level': 'WARNING',  # Set to DEBUG, WARNING,, G to see all debug logs
+           },
+       },
+   }
