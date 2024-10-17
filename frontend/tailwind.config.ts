@@ -11,9 +11,19 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: "var(--primary)",
+        secondary: "var(--secondary)",
+        accent: "var(--accent)",
+        text: "var(--text-color)",
       },
+      fontFamily: {
+        sans: ['"Helvetica Neue"', 'Arial', 'sans-serif'],
+        mono: ['"Courier New"', 'Courier', 'monospace'],
+      },
+      // Add other customizations like spacing, borderRadius, etc.
     },
   },
   plugins: [],
 };
+
 export default config;
