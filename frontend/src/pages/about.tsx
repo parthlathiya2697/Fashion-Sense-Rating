@@ -32,35 +32,26 @@ const About = () => {
   };
 
   return (
-    <div className="main-container flex flex-col items-center justify-center p-8">
-      <div className="content-container bg-white p-10 rounded-lg shadow-xl max-w-2xl">
-        <h1 className="title text-5xl font-extrabold mb-6 text-violet-800 text-center">About This Project</h1>
-        <p className="text-gray-700 mb-6 text-lg text-center">
-          This website is built using the following technologies:
-        </p>
-        <ul className="list-none text-gray-600 mb-6">
-          {skills.map((skill, index) => (
-            <li key={index} className="mb-4">
-              <button
-                onClick={() => toggleExpand(index)}
-                className="text-lg font-semibold text-violet-800 hover:underline text-left"
-              >
-                {skill.name}
-              </button>
-              <p
-                onClick={() => toggleExpand(index)}
-                className="text-sm mt-2 cursor-pointer"
-              >
-                {expanded === index ? skill.description : skill.description.substring(0, 60) + '...'}
-              </p>
-            </li>
-          ))}
-        </ul>
-        <div className="text-center">
-          <Link href="/" className="mt-8 inline-block text-white bg-violet-800 px-6 py-3 rounded-full font-semibold shadow-md hover:bg-violet-700 transition">
-            Back to Home
-          </Link>
+    <div className="main-container flex flex-wrap justify-center p-8">
+      <h1 className="w-full text-4xl font-bold mb-8 text-center text-white">Development Skills used</h1>
+      {skills.map((skill, index) => (
+        <div key={index} className="card bg-white bg-opacity-80 p-6 m-4 rounded-lg shadow-lg max-w-xs">
+          <h2 className="text-xl font-semibold mb-2">{skill.name}</h2>
+          <p className="">
+            {expanded === index ? skill.description : skill.description.substring(0, 60) + '...'}
+          </p>
+          <button
+            onClick={() => toggleExpand(index)}
+            className="text-sm mt-2 hover:underline"
+          >
+            {expanded === index ? 'Show Less' : 'Read More'}
+          </button>
         </div>
+      ))}
+      <div className="w-full text-center mt-8">
+        <Link href="/" className="inline-block text-white px-6 py-3 rounded-full font-semibold shadow-md  transition">
+          Back to Home
+        </Link>
       </div>
     </div>
   );
