@@ -45,7 +45,10 @@ export default function StyleUploader({ maxRequestCount, requestCount, setReques
             setShowPopup(true)
             return
           }
-          const data = await response.json()
+          const jsonResponse = await response.json(); // await the promise
+          const data = jsonResponse.analysis_result; // access the property
+
+          console.log("analyzeStyle response data : ", data)
           setRating(data.rating)
           setDescription(data.description)
           setImprovements(data.improvements)
@@ -96,12 +99,12 @@ export default function StyleUploader({ maxRequestCount, requestCount, setReques
           </div>
         )}
 
-        {image && (
-          <div className="flex flex-row items-start justify-between gap-8">
+{image && (
+          <div className="flex flex-row items-center justify-between gap-8"> {/* Change items-start to items-center */}
             <div className="flex-shrink-0">
               <Image src={image} alt="Uploaded selfie" width={300} height={300} className="rounded-lg" />
             </div>
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col justify-center"> {/* Add flex and justify-center */}
               {rating !== null && description && (
                 <div>
                   <h2 className="text-violet-800 text-2xl font-bold mb-2">Style Rating: {rating}/5</h2>

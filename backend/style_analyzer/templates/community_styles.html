@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Community Analyzed Styles</title>
+</head>
+<body>
+    <h1>Community Analyzed Styles</h1>
+    <ul>
+        {% for style in styles %}
+            <li>
+                <strong>{{ style.style_name }}</strong>: {{ style.analysis_result }} ({{ style.created_at }})
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
