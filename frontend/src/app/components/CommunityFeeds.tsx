@@ -14,6 +14,12 @@ export default function CommunityFeeds() {
   const [styles, setStyles] = useState<AnalyzedStyle[]>([]);
   const [isVisible, setIsVisible] = useState(false);
 
+
+  const renderStars = (rating: number) => {
+    return '★'.repeat(rating) + '☆'.repeat(5 - rating);
+  };
+
+
   useEffect(() => {
     const fetchStyles = async () => {
       try {
@@ -39,39 +45,51 @@ export default function CommunityFeeds() {
   }, [isVisible]);
 
   return (
-    
-    isVisible && <div id="community-section" className="community-section" style={{ minHeight: '100vh' }}>
+    isVisible && (
+      <div id="community-section" className="community-section" style={{ minHeight: '100vh' }}>
+        <div className="bg-white p-6 rounded-t-lg shadow-lg" style={{
+          borderTopLeftRadius: '150px',
+          borderTopRightRadius: '150px',
+          padding: '70px',
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        }}>
+          <h2 className="text-3xl font-bold mb-4 text-center text-purple-700" style={{ marginBottom: '70px' }}>
+            Community Analyzed Styles
+          </h2>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {styles.map((style, index) => {
+              const validJsonString = style.analysis_result.replace(/'/g, '"');
+              let analysisResult;
+              try {
+                analysisResult = JSON.parse(validJsonString);
+              } catch (error) {
+                console.error('Error parsing JSON:', error);
+                analysisResult = { rating: 'N/A', description: 'Invalid JSON format', improvements: [] };
+              }
 
-      <div className="bg-white p-6 rounded-t-lg shadow-lg" style={{
-        borderTopLeftRadius: '150px',
-        borderTopRightRadius: '150px',
-        padding: '70px',
-        backgroundColor: 'rgba(255, 255, 255, 0.9)', // Ensure only one backgroundColor is set
-        // backdropFilter: 'blur(10px)', 
-        // WebkitBackdropFilter: 'blur(10px)' 
-      }}>
-        <h2 className="text-3xl font-bold mb-4 text-center text-purple-700" style={{ marginBottom: '70px' }} >Community Analyzed Styles</h2>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {styles.map((style, index) => {
-            const validJsonString = style.analysis_result.replace(/'/g, '"');
-            let analysisResult;
-            try {
-              analysisResult = JSON.parse(validJsonString);
-            } catch (error) {
-              console.error('Error parsing JSON:', error);
-              analysisResult = { rating: 'N/A', description: 'Invalid JSON format' };
-            }
-            console.log("style : ", style);
-            return (
-              <li key={index} className="mb-4 card hover:shadow-lg hover:shadow-white transition-shadow duration-300">
-                <img src={`${style.image_data}`} alt={style.style_name} className="mb-2 rounded-lg" />
-                <p>Rating: {analysisResult.rating}</p>
-                <p>Analysis: {analysisResult.description}</p>
-              </li>
-            );
-          })}
-        </ul>
+              const shortDescription = analysisResult.description.split('.').slice(0, 1).join('.') + '.';
+
+              return (
+                <li key={index} className="mb-4 card hover:shadow-lg hover:shadow-white transition-shadow duration-300">
+                  <img src={`${style.image_data}`} alt={style.style_name} className="mb-2 rounded-lg" />
+                  <p>{renderStars(analysisResult.rating)}</p>
+                  <p>{shortDescription}</p>
+                  <details>
+                    <summary>Read More</summary>
+                    <br/><p><b>Full Description:</b> {analysisResult.description}</p>
+                    <br/><p><b>Points of Improvement:</b></p>
+                    <ul>
+                      {analysisResult.improvements.map((improvement: string, i: number) => (
+                        <li key={i}> > {improvement}</li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
-    </div>
+    )
   );
 }
