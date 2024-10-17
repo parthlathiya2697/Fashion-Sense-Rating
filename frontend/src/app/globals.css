@@ -100,3 +100,36 @@ body {
     background-position: 0% 50%;
   }
 }
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #6b46c1; /* Purple background */
+  color: white; /* White text */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #553c9a; /* Darker purple on hover */
+}
+
+.pagination button:disabled {
+  background-color: #d6bcfa; /* Light purple for disabled buttons */
+  cursor: not-allowed;
+}
+
+.pagination span {
+  color: #6b46c1; /* Purple text */
+  margin: 0 10px;
+}

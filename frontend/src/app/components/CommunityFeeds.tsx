@@ -13,7 +13,28 @@ interface AnalyzedStyle {
 export default function CommunityFeeds() {
   const [styles, setStyles] = useState<AnalyzedStyle[]>([]);
   const [isVisible, setIsVisible] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
+  const fetchStyles = async (page = 1) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/readStyles/?page=${page}`);
+      const data = await response.json();
+      console.log('Community data:', data);
+      setStyles(data.results);
+      setTotalPages(Math.ceil(data.count / 10)); // Assuming 10 items per page
+
+      if (data.results.length > 0) {
+        setIsVisible(true);
+      }
+    } catch (error) {
+      console.error('Error fetching styles:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStyles(currentPage);
+  }, [currentPage]);
 
   const renderStars = (rating: number) => {
     return '★'.repeat(rating) + '☆'.repeat(5 - rating);
@@ -26,9 +47,9 @@ export default function CommunityFeeds() {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/readStyles/`);
         const data = await response.json();
         console.log('Community data:', data);
-        setStyles(data.styles);
+        setStyles(data.results);
 
-        if (data.styles.length > 0) {
+        if (data.results.length > 0) {
           setIsVisible(true);
         }
       } catch (error) {
@@ -76,8 +97,8 @@ export default function CommunityFeeds() {
                   <p>{shortDescription}</p>
                   <details>
                     <summary>Read More</summary>
-                    <br/><p><b>Full Description:</b> {analysisResult.description}</p>
-                    <br/><p><b>Points of Improvement:</b></p>
+                    <br /><p><b>Full Description:</b> {analysisResult.description}</p>
+                    <br /><p><b>Points of Improvement:</b></p>
                     <ul>
                       {analysisResult.improvements.map((improvement: string, i: number) => (
                         <li key={i}> > {improvement}</li>
@@ -88,8 +109,19 @@ export default function CommunityFeeds() {
               );
             })}
           </ul>
+          <div className="pagination-controls pagination">
+          <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
+            Previous
+          </button>
+          <span>Page {currentPage} of {totalPages}</span>
+          <button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages}>
+            Next
+          </button>
         </div>
+        </div>
+        
       </div>
+
     )
   );
 }

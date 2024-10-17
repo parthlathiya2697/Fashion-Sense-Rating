@@ -4,6 +4,7 @@ from rest_framework import status
 from openai import OpenAI
 import json
 from backend import settings
+from rest_framework.pagination import PageNumberPagination
 
 
 from django.shortcuts import render
@@ -28,9 +29,12 @@ class WriteStyleView(APIView):
 
 class ReadStyleView(APIView):
     def get(self, request, *args, **kwargs):
+        paginator = PageNumberPagination()
+        paginator.page_size = 10  # Set the number of items per page
         styles = AnalyzedStyle.objects.all().values('style_name', 'analysis_result', 'created_at', "image_data")
-        return Response({'styles': list(styles)}, status=status.HTTP_200_OK)
-
+        result_page = paginator.paginate_queryset(styles, request)
+        return paginator.get_paginated_response(result_page)
+    
 
 class RequestCountView(APIView):
     def get(self, request, *args, **kwargs):
