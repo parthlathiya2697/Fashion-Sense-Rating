@@ -16,7 +16,7 @@ export default function RequestCountDisplay({ requestCount, setRequestCount }: R
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/requestCount/`);
         const data = await response.json();
-        setRequestCount(data.request_count);
+        setRequestCount((data.requestCount ?? 0) + 1);
         setMaxRequestCount(data.max_request_count); // Assuming the API returns this value
       } catch (error) {
         console.error('Error fetching request data:', error);

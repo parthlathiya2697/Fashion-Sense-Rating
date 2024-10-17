@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import '../app/globals.css'; // Ensure global styles are imported
+import { NextResponse } from 'next/server'
 
 const skills = [
   {

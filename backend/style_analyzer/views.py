@@ -84,6 +84,9 @@ class AnalyzeStyleView(APIView):
             # Save the analysis result to the database
             db_obj = AnalyzedStyle.objects.create(style_name="User Style", analysis_result=analysis_result)
 
+            # increease the request count
+            settings.request_count += 1
+
             # db_dict = db_obj.__dict__
 
             # # Extract the analysis_result string and clean it up

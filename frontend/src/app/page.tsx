@@ -5,8 +5,8 @@ import StyleUploader from './components/StyleUploader';
 import RequestCountDisplay from './components/RequestCountDisplay';
 import Link from 'next/link';
 
-import WriteStyleForm from './components/WriteStyleForm';
 import CommunityFeeds from './components/CommunityFeeds';
+import "./globals.css";
 
 export default function Home() {
   const [requestCount, setRequestCount] = useState<number | null>(null);
